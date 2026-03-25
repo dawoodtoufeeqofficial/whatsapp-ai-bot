@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: whatsapp-ai-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 60
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: GROQ_API_KEY
+        sync: false  # Set this manually in Render dashboard
+      - key: WHATSAPP_API_TOKEN
+        sync: false  # Set this manually in Render dashboard
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        sync: false  # Set this manually in Render dashboard
+      - key: VERIFY_TOKEN
+        sync: false  # Set this manually in Render dashboard
+      - key: FLASK_DEBUG
+        value: "False"
+    healthCheckPath: /health
+    autoDeploy: true
